@@ -22,6 +22,7 @@ def create_category_directories():
 
 
 def copy_to_directories():
+    create_category_directories()
     for files in base_path.glob("*"):
         for cat, extension in FILE_CATEGORIES.items():
             if files.suffix in extension:
@@ -30,6 +31,7 @@ def copy_to_directories():
 
 
 def move_to_directories():
+    create_category_directories()
     for files in base_path.glob("*"):
         for cat, extension in FILE_CATEGORIES.items():
             if files.suffix in extension:
