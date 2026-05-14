@@ -26,6 +26,7 @@ def search_directories():
         for cat, extension in FILE_CATEGORIES.items():
             if files.suffix in extension:
                 Path.copy_into(files, target_path / cat)
+                print(f"✅ {files.name} copy to {cat} ")
 
 
 create_category_directories()
