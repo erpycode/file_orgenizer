@@ -37,4 +37,14 @@ def move_to_directories():
                 print(f"✅ {files.name} copy to {cat} ")
 
 
+print("*" * 20, "\n")
+print("📁 File Organizer \n")
+print("*" * 20, "\n")
 
+print("1.🔴 Move File To Folders \n ")
+print("2.🔴 Copy Files To Folfers \n")
+
+user_choice=input("❓: ")
+
+if user_choice=="1":
+    
