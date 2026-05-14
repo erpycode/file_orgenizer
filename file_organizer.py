@@ -1,0 +1,23 @@
+from pathlib import Path
+
+base_path = Path("/home/itserfanaref/Downloads")
+target_path = base_path / "sorted"
+
+
+FILE_CATEGORIES = {
+    "images": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff", ".svg", ".webp"],
+    "documents": [".pdf", ".doc", ".docx", ".txt", ".xls", ".xlsx", ".ppt", ".pptx"],
+    "videos": [".mp4", ".mkv", ".avi", ".mov", ".wmv"],
+    "audio": [".mp3", ".wav", ".aac", ".flac", ".ogg"],
+    "archives": [".zip", ".rar", ".tar", ".gz", ".7z"],
+}
+
+
+def create_category_directories():
+
+    for category, _ in FILE_CATEGORIES.items():
+
+        (target_path / category).mkdir(parents=True, exist_ok=True)
+
+def search_directories():
+    
