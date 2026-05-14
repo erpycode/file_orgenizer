@@ -21,7 +21,7 @@ def create_category_directories():
         (target_path / category).mkdir(parents=True, exist_ok=True)
 
 
-def search_directories():
+def copy_to_directories():
     for files in base_path.glob("*"):
         for cat, extension in FILE_CATEGORIES.items():
             if files.suffix in extension:
@@ -29,5 +29,12 @@ def search_directories():
                 print(f"✅ {files.name} copy to {cat} ")
 
 
-create_category_directories()
-search_directories()
+def move_to_directories():
+    for files in base_path.glob("*"):
+        for cat, extension in FILE_CATEGORIES.items():
+            if files.suffix in extension:
+                Path.move_into(files, target_path / cat)
+                print(f"✅ {files.name} copy to {cat} ")
+
+
+
