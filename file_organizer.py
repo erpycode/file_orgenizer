@@ -1,6 +1,7 @@
 from pathlib import Path
+import os
 
-base_path = Path("/home/itserfanaref/Downloads")
+base_path = Path(os.path.dirname(__file__))
 target_path = base_path / "sorted"
 
 
