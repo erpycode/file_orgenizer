@@ -26,7 +26,7 @@ def copy_to_directories():
         for cat, extension in FILE_CATEGORIES.items():
             if files.suffix in extension:
                 Path.copy_into(files, target_path / cat)
-                print(f"✅ {files.name} copy to {cat} ")
+                print(f"🔵 {files.name} 🔵 copy to {cat} ")
 
 
 def move_to_directories():
@@ -34,14 +34,14 @@ def move_to_directories():
         for cat, extension in FILE_CATEGORIES.items():
             if files.suffix in extension:
                 Path.move_into(files, target_path / cat)
-                print(f"✅ {files.name} copy to {cat} ")
+                print(f"🟡 {files.name} 🟡 Moved to {cat} ")
 
 
 def dry_mode():
     for files in base_path.glob("*"):
         for cat, extension in FILE_CATEGORIES.items():
             if files.suffix in extension:
-                print(f"✅ {files.name} will be copy / move to {cat} ")
+                print(f"🟢 {files.name} 🟢 will be copy / move to {cat} ")
 
 
 print("*" * 20, "\n")
