@@ -19,5 +19,13 @@ def create_category_directories():
 
         (target_path / category).mkdir(parents=True, exist_ok=True)
 
+
 def search_directories():
-    
+    for files in base_path.glob("*"):
+        for cat, extension in FILE_CATEGORIES.items():
+            if files.suffix in extension:
+                Path.copy_into(files, target_path / cat)
+
+
+create_category_directories()
+search_directories()
