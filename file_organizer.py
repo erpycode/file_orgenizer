@@ -83,9 +83,11 @@ elif user_choice == "3":
     user_choice = input("❓: ")
     
     if user_choice == "1":
+        clear()
         move_to_directories()
 
     elif user_choice == "2":
+        clear()
         copy_to_directories()
 
 elif user_choice == "4":
