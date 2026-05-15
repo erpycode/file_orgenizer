@@ -51,7 +51,7 @@ print("📁 File Organizer \n")
 print("*" * 20, "\n")
 
 print("1.🟡 Move File To Folders \n ")
-print("2.🔵 Copy Files To Folfers \n")
+print("2.🔵 Copy Files To Folders \n")
 print("3.🟢 Dry Mode \n")
 print("4.🔴 Exit \n")
 
@@ -59,9 +59,14 @@ user_choice = input("❓: ")
 
 if user_choice == "1":
     move_to_directories()
+
 elif user_choice == "2":
     copy_to_directories()
+
 elif user_choice == "3":
     dry_mode()
+
 elif user_choice == "4":
     exit()
+
+
