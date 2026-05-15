@@ -15,8 +15,7 @@ FILE_CATEGORIES = {
 
 
 def create_category_directories():
-    """create folders_
-    """
+    """create folders_"""
 
     for category, _ in FILE_CATEGORIES.items():
 
@@ -24,8 +23,7 @@ def create_category_directories():
 
 
 def copy_to_directories():
-    """copy to folders
-    """
+    """copy to folders"""
     create_category_directories()
     for files in base_path.glob("*"):
         for cat, extension in FILE_CATEGORIES.items():
@@ -35,8 +33,7 @@ def copy_to_directories():
 
 
 def move_to_directories():
-    """move to folders
-    """
+    """move to folders"""
     create_category_directories()
     for files in base_path.glob("*"):
         for cat, extension in FILE_CATEGORIES.items():
@@ -46,12 +43,19 @@ def move_to_directories():
 
 
 def dry_mode():
-    """dry mode 
-    """
+    """dry mode"""
     for files in base_path.glob("*"):
         for cat, extension in FILE_CATEGORIES.items():
             if files.suffix in extension:
                 print(f"🟢 {files.name} 🟢 will be copy / move to {cat} ")
+
+
+def clear():
+    os.system("cls" if os.name == "nt" else "clear")
+
+
+clear()  # قبل از نمایش منو صفحه رو پاک کن
+
 
 
 print("*" * 20, "\n")
@@ -72,6 +76,7 @@ elif user_choice == "2":
     copy_to_directories()
 
 elif user_choice == "3":
+    clear()
     dry_mode()
 
 elif user_choice == "4":
