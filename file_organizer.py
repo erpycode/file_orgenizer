@@ -54,8 +54,7 @@ def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
 
-clear()  # قبل از نمایش منو صفحه رو پاک کن
-
+clear()
 
 
 print("*" * 20, "\n")
@@ -78,6 +77,16 @@ elif user_choice == "2":
 elif user_choice == "3":
     clear()
     dry_mode()
+    print("\n")
+    print("1.🟡 Move File To Folders \n ")
+    print("2.🔵 Copy Files To Folders \n")
+    user_choice = input("❓: ")
+    
+    if user_choice == "1":
+        move_to_directories()
+
+    elif user_choice == "2":
+        copy_to_directories()
 
 elif user_choice == "4":
     exit()
