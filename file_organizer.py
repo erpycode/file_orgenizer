@@ -15,6 +15,8 @@ FILE_CATEGORIES = {
 
 
 def create_category_directories():
+    """create folders_
+    """
 
     for category, _ in FILE_CATEGORIES.items():
 
@@ -22,6 +24,8 @@ def create_category_directories():
 
 
 def copy_to_directories():
+    """copy to folders
+    """
     create_category_directories()
     for files in base_path.glob("*"):
         for cat, extension in FILE_CATEGORIES.items():
@@ -31,6 +35,8 @@ def copy_to_directories():
 
 
 def move_to_directories():
+    """move to folders
+    """
     create_category_directories()
     for files in base_path.glob("*"):
         for cat, extension in FILE_CATEGORIES.items():
@@ -40,6 +46,8 @@ def move_to_directories():
 
 
 def dry_mode():
+    """dry mode 
+    """
     for files in base_path.glob("*"):
         for cat, extension in FILE_CATEGORIES.items():
             if files.suffix in extension:
@@ -68,5 +76,3 @@ elif user_choice == "3":
 
 elif user_choice == "4":
     exit()
-
-
