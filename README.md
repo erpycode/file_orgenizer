@@ -8,7 +8,10 @@
 
 ## ✨ What Is This?
 
-**File Organizer** is a lightweight Python script that scans a directory and sorts files into categorized subfolders automatically. No more hunting through cluttered downloads folders!
+**File Organizer** is a lightweight Python tool that sorts files into categorized subfolders automatically. Choose between:
+
+- **CLI Mode** (`file_organizer.py`) — Terminal-based interface with simple menu
+- **GUI Mode** (`file_organizer_gui.py`) — Modern graphical interface with visual controls
 
 ---
 
@@ -22,6 +25,8 @@
 | 🎵 Audio | `.mp3` `.wav` `.aac` `.flac` `.ogg` |
 | 🗜️ Archives | `.zip` `.rar` `.tar` `.gz` `.7z` |
 
+**Custom categories can be added in GUI mode!**
+
 ---
 
 ## 🚀 Getting Started
@@ -29,115 +34,101 @@
 ### Prerequisites
 
 - Python **3.6+**
-- No external dependencies — uses only the standard library!
+- For GUI mode: `python3-tk` (usually pre-installed)
 
 ### Installation
 
 ```bash
-# Clone or download the script
 git clone https://github.com/yourname/file-organizer.git
 cd file-organizer
-
-# Place the script in the folder you want to organize
-# (or point base_path to your target directory)
 ```
 
-### Run
+### Run CLI Version
 
 ```bash
 python file_organizer.py
 ```
 
+### Run GUI Version
+
+```bash
+python file_organizer_gui.py
+```
+
 ---
 
-## 🎮 How It Works
+## 🖥️ GUI Mode Features
 
-When you run the script, you'll see an interactive menu:
+### Modern Interface
+- Dark theme with purple accents
+- Responsive layout with proper spacing
 
-```
-********************
+### Source Selection
+- **Browse Button** — Select any directory
+- **Current Folder Button** — Use the folder where the program is located
 
-📁 File Organizer
+### Operation Modes
+- **Move** — Files moved to exported folder (originals deleted)
+- **Copy** — Files copied to exported folder (originals preserved)
 
-********************
+### Custom Categories
+Add your own file type categories:
+1. Enter **Folder Name** (e.g., `projects`)
+2. Enter **Extensions** (e.g., `.py,.js,.html`)
+3. Click **Add** to create the category
+4. Files with matching extensions will be sorted into that folder
 
-1.🟡 Move File To Folders
-2.🔵 Copy Files To Folders
-3.🟢 Dry Mode
-4.🔴 Exit
-```
+### Dry Run
+Preview what files will be sorted without making any changes.
 
-### Menu Options
+---
 
-#### 🟡 `1` — Move Files
-Moves every recognized file from the source directory into the appropriate subfolder inside `sorted/`. The original files are **removed** from their current location.
+## 🎮 CLI Mode
 
-```
-🟡 photo.jpg 🟡 Moved to images
-🟡 report.pdf 🟡 Moved to documents
-```
-
-#### 🔵 `2` — Copy Files
-Copies every recognized file into the appropriate subfolder inside `sorted/`. The original files **remain in place** — great for a non-destructive organization.
-
-```
-🔵 song.mp3 🔵 copy to audio
-🔵 archive.zip 🔵 copy to archives
-```
-
-#### 🟢 `3` — Dry Mode
-Simulates the organization **without touching any files**. Perfect for previewing what will happen before committing.
-
-```
-🟢 video.mp4 🟢 will be copy / move to videos
-🟢 notes.txt 🟢 will be copy / move to documents
-```
-
-#### 🔴 `4` — Exit
-Exits the program. Simple as that.
+Interactive terminal menu with options:
+- `1` — Move files to sorted folders
+- `2` — Copy files to sorted folders  
+- `3` — Dry run (preview only)
+- `4` — Exit
 
 ---
 
 ## 🗂️ Output Structure
 
-After running, your `sorted/` folder will look like this:
-
+Files are organized into:
 ```
-sorted/
-├── 🖼️  images/
-├── 📄  documents/
-├── 🎬  videos/
-├── 🎵  audio/
-└── 🗜️  archives/
+[selected-folder]/
+└── exported/
+    ├── 🖼️  images/
+    ├── 📄  documents/
+    ├── 🎬  videos/
+    ├── 🎵  audio/
+    ├── 🗜️  archives/
+    └── [your-custom-folders]/
 ```
 
 ---
 
 ## ⚙️ Customization
 
-Want to add more file types? Open `file_organizer.py` and edit the `FILE_CATEGORIES` dictionary:
+Edit `FILE_CATEGORIES` in the source code:
 
 ```python
 FILE_CATEGORIES = {
     "images": [".jpg", ".jpeg", ".png", ...],
-    "code": [".py", ".js", ".ts", ".html"],   # ← add your own!
+    "code": [".py", ".js", ".ts", ".html"],  # Add your own!
     ...
 }
-```
-
-Want to change the output folder? Update `target_path`:
-
-```python
-target_path = base_path / "sorted"   # ← change "sorted" to anything
 ```
 
 ---
 
 ## 📋 Notes
 
-- Files with **unrecognized extensions** are left untouched.
-- The `sorted/` directory and all category subfolders are created **automatically** if they don't exist.
-- Running the script from within the `sorted/` folder is not recommended.
+- Files with **unrecognized extensions** are left untouched
+- The `exported/` directory is created automatically
+- Running from within `exported/` folder is not recommended
+- GUI requires tkinter (`sudo apt install python3-tk` on Ubuntu/Debian)
 
 ---
 
