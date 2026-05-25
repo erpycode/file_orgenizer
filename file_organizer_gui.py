@@ -13,12 +13,14 @@ FILE_CATEGORIES = {
     "archives": [".zip", ".rar", ".tar", ".gz", ".7z"],
 }
 
+custom_categories = {}
+
 
 class FileOrganizerGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("📁 File Organizer")
-        self.root.geometry("650x580")
+        self.root.geometry("650x700")
         self.root.configure(bg="#1e1e2e")
         self.root.resizable(False, False)
         
@@ -85,6 +87,44 @@ class FileOrganizerGUI:
         tk.Label(target_info, text="🎯 Target: [source]/exported/ (auto-sorted by file type)",
                  font=("Segoe UI", 9), bg="#1e1e2e", fg="#888888").pack(anchor=tk.W)
         
+        custom_frame = tk.Frame(main_frame, bg="#2d2d44", padx=15, pady=15, relief=tk.RIDGE, bd=1)
+        custom_frame.pack(fill=tk.X, pady=(0, 15))
+        
+        tk.Label(custom_frame, text="➕ Custom Categories", font=("Segoe UI", 11, "bold"), 
+                 bg="#2d2d44", fg="#ffffff").pack(anchor=tk.W)
+        
+        custom_input_frame = tk.Frame(custom_frame, bg="#2d2d44")
+        custom_input_frame.pack(fill=tk.X, pady=(10, 0))
+        
+        tk.Label(custom_input_frame, text="Folder:", font=("Segoe UI", 9), 
+                 bg="#2d2d44", fg="#cccccc").pack(side=tk.LEFT)
+        self.custom_folder = tk.Entry(custom_input_frame, font=("Segoe UI", 9), width=12,
+                                      bg="#1e1e2e", fg="#ffffff", relief=tk.FLAT, insertbackground="#ffffff")
+        self.custom_folder.pack(side=tk.LEFT, padx=(5, 10))
+        self.custom_folder.insert(0, "myfiles")
+        
+        tk.Label(custom_input_frame, text="Extensions:", font=("Segoe UI", 9), 
+                 bg="#2d2d44", fg="#cccccc").pack(side=tk.LEFT)
+        self.custom_ext = tk.Entry(custom_input_frame, font=("Segoe UI", 9), width=20,
+                                   bg="#1e1e2e", fg="#ffffff", relief=tk.FLAT, insertbackground="#ffffff")
+        self.custom_ext.pack(side=tk.LEFT, padx=5)
+        self.custom_ext.insert(0, ".xyz,.abc")
+        
+        add_btn = tk.Button(custom_input_frame, text="Add", font=("Segoe UI", 9),
+                            bg="#00aa66", fg="#ffffff", relief=tk.FLAT, padx=10, cursor="hand2",
+                            command=self.add_custom_category)
+        add_btn.pack(side=tk.LEFT, padx=5)
+        
+        self.custom_list = tk.Listbox(custom_frame, height=3, font=("Segoe UI", 9),
+                                        bg="#1e1e2e", fg="#ffffff", relief=tk.FLAT,
+                                        selectbackground="#007acc")
+        self.custom_list.pack(fill=tk.X, pady=(5, 0))
+        
+        del_btn = tk.Button(custom_frame, text="🗑️ Delete Selected", font=("Segoe UI", 8),
+                            bg="#aa3333", fg="#ffffff", relief=tk.FLAT, padx=8, cursor="hand2",
+                            command=self.delete_custom_category)
+        del_btn.pack(anchor=tk.E, pady=(5, 0))
+        
         button_frame = tk.Frame(main_frame, bg="#1e1e2e")
         button_frame.pack(pady=(10, 15))
         
@@ -130,6 +170,36 @@ class FileOrganizerGUI:
         if path:
             self.source_path.set(path)
     
+    def add_custom_category(self):
+        folder = self.custom_folder.get().strip()
+        extensions = self.custom_ext.get().strip()
+        
+        if not folder or not extensions:
+            messagebox.showwarning("Warning", "Please enter folder name and extensions")
+            return
+        
+        if folder in FILE_CATEGORIES or folder in custom_categories:
+            messagebox.showwarning("Warning", "Category already exists")
+            return
+        
+        ext_list = [e.strip() if e.strip().startswith(".") else f".{e.strip()}" for e in extensions.split(",")]
+        custom_categories[folder] = ext_list
+        self.custom_list.insert(tk.END, f"{folder}: {', '.join(ext_list)}")
+        self.custom_folder.delete(0, tk.END)
+        self.custom_ext.delete(0, tk.END)
+    
+    def delete_custom_category(self):
+        selection = self.custom_list.curselection()
+        if not selection:
+            return
+        
+        index = selection[0]
+        item = self.custom_list.get(index)
+        folder_name = item.split(":")[0].strip()
+        if folder_name in custom_categories:
+            del custom_categories[folder_name]
+        self.custom_list.delete(index)
+    
     def log(self, message, color="#88ff88"):
         self.result_text.configure(state=tk.NORMAL)
         self.result_text.insert(tk.END, message + "\n")
@@ -139,6 +209,9 @@ class FileOrganizerGUI:
     def get_category(self, file_path):
         suffix = file_path.suffix.lower()
         for category, extensions in FILE_CATEGORIES.items():
+            if suffix in extensions:
+                return category
+        for category, extensions in custom_categories.items():
             if suffix in extensions:
                 return category
         return None
@@ -159,6 +232,9 @@ class FileOrganizerGUI:
         target.mkdir(parents=True, exist_ok=True)
         
         for category in FILE_CATEGORIES.keys():
+            (target / category).mkdir(parents=True, exist_ok=True)
+        
+        for category in custom_categories.keys():
             (target / category).mkdir(parents=True, exist_ok=True)
         
         files_processed = 0
